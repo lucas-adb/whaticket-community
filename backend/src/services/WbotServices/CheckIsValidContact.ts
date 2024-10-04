@@ -13,6 +13,7 @@ const CheckIsValidContact = async (number: string): Promise<void> => {
       throw new AppError("invalidNumber");
     }
   } catch (err) {
+    // @ts-ignore
     if (err.message === "invalidNumber") {
       throw new AppError("ERR_WAPP_INVALID_CONTACT");
     }

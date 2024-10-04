@@ -71,12 +71,13 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
   try {
     await schema.validate(newContact);
   } catch (err) {
+    // @ts-ignore
     throw new AppError(err.message);
   }
 
   await CheckIsValidContact(newContact.number);
   const validNumber : any = await CheckContactNumber(newContact.number)
-  
+
   const profilePicUrl = await GetProfilePicUrl(validNumber);
 
   let name = newContact.name
@@ -126,6 +127,7 @@ export const update = async (
   try {
     await schema.validate(contactData);
   } catch (err) {
+    // @ts-ignore
     throw new AppError(err.message);
   }
 

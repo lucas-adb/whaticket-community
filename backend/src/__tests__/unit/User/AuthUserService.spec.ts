@@ -43,7 +43,9 @@ describe("Auth", () => {
       });
     } catch (err) {
       expect(err).toBeInstanceOf(AppError);
+      // @ts-ignore
       expect(err.statusCode).toBe(401);
+      // @ts-ignore
       expect(err.message).toBe("ERR_INVALID_CREDENTIALS");
     }
   });
@@ -62,7 +64,9 @@ describe("Auth", () => {
       });
     } catch (err) {
       expect(err).toBeInstanceOf(AppError);
+      // @ts-ignore
       expect(err.statusCode).toBe(401);
+      // @ts-ignore
       expect(err.message).toBe("ERR_INVALID_CREDENTIALS");
     }
   });
