@@ -17,6 +17,8 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import LightMode from "../assets/lightMode.svg";
+import DarkMode from "../assets/darkMode.svg";
 
 import MainListItems from "./MainListItems";
 import NotificationsPopOver from "../components/NotificationsPopOver";
@@ -133,6 +135,10 @@ const LoggedInLayout = ({ children }) => {
     }
   }, [drawerOpen]);
 
+  const handleThemeChange = () => {
+    console.log("handleThemeChange");
+  }
+
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
     setMenuOpen(true);
@@ -230,6 +236,16 @@ const LoggedInLayout = ({ children }) => {
               color="inherit"
             >
               <AccountCircle />
+            </IconButton>
+            <IconButton
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleThemeChange}
+              color="inherit"
+            >
+              <img src={LightMode} alt="LightMode"/>
+              {/* <img src={DarkMode} alt="DarkMode"/> */}
             </IconButton>
             <Menu
               id="menu-appbar"

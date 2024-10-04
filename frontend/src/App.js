@@ -4,9 +4,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import { ptBR } from "@material-ui/core/locale";
+import { useMediaQuery } from "@material-ui/core";
 
 const App = () => {
   const [locale, setLocale] = useState();
+  const [colorMode, setColorMode] = useState("light");
 
   const theme = createTheme(
     {

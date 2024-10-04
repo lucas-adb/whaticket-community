@@ -68,7 +68,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   searchIcon: {
-    color: "grey",
+    // color: "grey",
+    color: "#ab47bc",
     marginLeft: 6,
     marginRight: 6,
     alignSelf: "center",
