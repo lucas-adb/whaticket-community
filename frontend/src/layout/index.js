@@ -27,6 +27,8 @@ import { AuthContext } from "../context/Auth/AuthContext";
 import BackdropLoading from "../components/BackdropLoading";
 import { i18n } from "../translate/i18n";
 
+import { ColorModeContext } from "../context/ColorMode/ColorModeContext";
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -120,6 +122,7 @@ const LoggedInLayout = ({ children }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerVariant, setDrawerVariant] = useState("permanent");
   const { user } = useContext(AuthContext);
+  const { colorMode, setColorMode } = useContext(ColorModeContext);
 
   useEffect(() => {
     if (document.body.offsetWidth > 600) {
@@ -137,6 +140,7 @@ const LoggedInLayout = ({ children }) => {
 
   const handleThemeChange = () => {
     console.log("handleThemeChange");
+    console.log("colorMode", colorMode);
   }
 
   const handleMenu = (event) => {
