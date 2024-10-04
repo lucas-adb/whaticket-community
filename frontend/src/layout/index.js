@@ -141,6 +141,7 @@ const LoggedInLayout = ({ children }) => {
   const handleThemeChange = () => {
     console.log("handleThemeChange");
     console.log("colorMode", colorMode);
+    setColorMode(colorMode === "light" ? "dark" : "light");
   }
 
   const handleMenu = (event) => {
@@ -248,8 +249,7 @@ const LoggedInLayout = ({ children }) => {
               onClick={handleThemeChange}
               color="inherit"
             >
-              <img src={LightMode} alt="LightMode"/>
-              {/* <img src={DarkMode} alt="DarkMode"/> */}
+              { colorMode === "light" ? <img src={DarkMode} alt="DarkMode"/> : <img src={LightMode} alt="LightMode"/> }
             </IconButton>
             <Menu
               id="menu-appbar"
