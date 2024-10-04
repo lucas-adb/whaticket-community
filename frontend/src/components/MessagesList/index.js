@@ -33,6 +33,8 @@ import api from "../../services/api";
 import toastError from "../../errors/toastError";
 import Audio from "../Audio";
 
+import { ColorModeContext } from "../../context/ColorMode/ColorModeContext";
+
 const useStyles = makeStyles((theme) => ({
   messagesListWrapper: {
     overflow: "hidden",
@@ -322,6 +324,8 @@ const MessagesList = ({ ticketId, isGroup }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const messageOptionsMenuOpen = Boolean(anchorEl);
   const currentTicketId = useRef(ticketId);
+
+  const { colorMode } = React.useContext(ColorModeContext);
 
   useEffect(() => {
     dispatch({ type: "RESET" });
@@ -689,6 +693,7 @@ const MessagesList = ({ ticketId, isGroup }) => {
       <div
         id="messagesList"
         className={classes.messagesList}
+        style={{ backgroundImage: `url(${colorMode === "light" ? whatsBackground : whatsBackgroundDark})` }}
         onScroll={handleScroll}
       >
         {messagesList.length > 0 ? renderMessages() : []}
