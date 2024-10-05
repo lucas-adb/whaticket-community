@@ -22,6 +22,9 @@ const useStyles = makeStyles(theme => ({
 			margin: theme.spacing(1),
 		},
 	},
+	iconButton: {
+		color: theme.palette.text.primary,
+	}
 }));
 
 const TicketActionButtons = ({ ticket }) => {
@@ -91,7 +94,7 @@ const TicketActionButtons = ({ ticket }) => {
 					>
 						{i18n.t("messagesList.header.buttons.resolve")}
 					</ButtonWithSpinner>
-					<IconButton onClick={handleOpenTicketOptionsMenu}>
+					<IconButton onClick={handleOpenTicketOptionsMenu} className={classes.iconButton}>
 						<MoreVert />
 					</IconButton>
 					<TicketOptionsMenu

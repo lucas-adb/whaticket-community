@@ -24,6 +24,7 @@ const wbotMonitor = async (
         await whatsapp.update({ status: newState });
       } catch (err) {
         Sentry.captureException(err);
+        // @ts-ignore
         logger.error(err);
       }
 
@@ -43,6 +44,7 @@ const wbotMonitor = async (
         await whatsapp.update({ battery, plugged });
       } catch (err) {
         Sentry.captureException(err);
+        // @ts-ignore
         logger.error(err);
       }
 
@@ -58,6 +60,7 @@ const wbotMonitor = async (
         await whatsapp.update({ status: "OPENING", session: "" });
       } catch (err) {
         Sentry.captureException(err);
+        // @ts-ignore
         logger.error(err);
       }
 
@@ -70,6 +73,7 @@ const wbotMonitor = async (
     });
   } catch (err) {
     Sentry.captureException(err);
+    // @ts-ignore
     logger.error(err);
   }
 };

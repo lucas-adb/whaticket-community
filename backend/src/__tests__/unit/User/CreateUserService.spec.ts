@@ -41,6 +41,7 @@ describe("User", () => {
       });
     } catch (err) {
       expect(err).toBeInstanceOf(AppError);
+      // @ts-ignore
       expect(err.statusCode).toBe(400);
     }
   });

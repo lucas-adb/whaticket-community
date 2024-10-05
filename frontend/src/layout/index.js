@@ -17,6 +17,8 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import LightMode from "../assets/lightMode.svg";
+import DarkMode from "../assets/darkMode.svg";
 
 import MainListItems from "./MainListItems";
 import NotificationsPopOver from "../components/NotificationsPopOver";
@@ -24,6 +26,8 @@ import UserModal from "../components/UserModal";
 import { AuthContext } from "../context/Auth/AuthContext";
 import BackdropLoading from "../components/BackdropLoading";
 import { i18n } from "../translate/i18n";
+
+import { ColorModeContext } from "../context/ColorMode/ColorModeContext";
 
 const drawerWidth = 240;
 
@@ -34,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       height: "calc(100vh - 56px)",
     },
+    color: theme.palette.text.primary,
   },
 
   toolbar: {
@@ -107,6 +112,12 @@ const useStyles = makeStyles((theme) => ({
     overflow: "auto",
     flexDirection: "column",
   },
+  menuIcons: {
+    fill: theme.palette.text.primary,
+  },
+  divider: {
+    backgroundColor: theme.palette.text.tertiary,
+  }
 }));
 
 const LoggedInLayout = ({ children }) => {
@@ -118,6 +129,7 @@ const LoggedInLayout = ({ children }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerVariant, setDrawerVariant] = useState("permanent");
   const { user } = useContext(AuthContext);
+  const { colorMode, handleSetColorMode } = useContext(ColorModeContext);
 
   useEffect(() => {
     if (document.body.offsetWidth > 600) {
@@ -132,6 +144,10 @@ const LoggedInLayout = ({ children }) => {
       setDrawerVariant("permanent");
     }
   }, [drawerOpen]);
+
+  const handleThemeChange = () => {
+    handleSetColorMode();
+  }
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -178,14 +194,15 @@ const LoggedInLayout = ({ children }) => {
       >
         <div className={classes.toolbarIcon}>
           <IconButton onClick={() => setDrawerOpen(!drawerOpen)}>
-            <ChevronLeftIcon />
+            <ChevronLeftIcon className={classes.menuIcons} />
+            {/* <ChevronLeftIcon/> */}
           </IconButton>
         </div>
-        <Divider />
+        <Divider className={classes.divider} />
         <List>
           <MainListItems drawerClose={drawerClose} />
         </List>
-        <Divider />
+        <Divider className={classes.divider} />
       </Drawer>
       <UserModal
         open={userModalOpen}
@@ -230,6 +247,15 @@ const LoggedInLayout = ({ children }) => {
               color="inherit"
             >
               <AccountCircle />
+            </IconButton>
+            <IconButton
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleThemeChange}
+              color="inherit"
+            >
+              { colorMode === "light" ? <img src={DarkMode} alt="DarkMode"/> : <img src={LightMode} alt="LightMode"/> }
             </IconButton>
             <Menu
               id="menu-appbar"

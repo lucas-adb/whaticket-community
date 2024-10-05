@@ -36,7 +36,8 @@ const useStyles = makeStyles((theme) => ({
 
   tabsHeader: {
     flex: "none",
-    backgroundColor: "#eee",
+    // backgroundColor: "#eee",
+    backgroundColor: theme.palette.primary.light,
   },
 
   settingsIcon: {
@@ -54,13 +55,15 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    background: "#fafafa",
+    // background: "#232D36",
+    // background: theme.palette.primary.light,
     padding: theme.spacing(1),
   },
 
   serachInputWrapper: {
     flex: 1,
-    background: "#fff",
+    // background: "#fff",
+    background: theme.palette.message.main,
     display: "flex",
     borderRadius: 40,
     padding: 4,
@@ -68,7 +71,9 @@ const useStyles = makeStyles((theme) => ({
   },
 
   searchIcon: {
-    color: "grey",
+    // color: "grey",
+    // color: "#ab47bc",
+    color: theme.palette.text.primary,
     marginLeft: 6,
     marginRight: 6,
     alignSelf: "center",
