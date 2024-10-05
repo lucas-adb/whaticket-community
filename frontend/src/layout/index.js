@@ -129,7 +129,7 @@ const LoggedInLayout = ({ children }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerVariant, setDrawerVariant] = useState("permanent");
   const { user } = useContext(AuthContext);
-  const { colorMode, setColorMode } = useContext(ColorModeContext);
+  const { colorMode, handleSetColorMode } = useContext(ColorModeContext);
 
   useEffect(() => {
     if (document.body.offsetWidth > 600) {
@@ -146,9 +146,7 @@ const LoggedInLayout = ({ children }) => {
   }, [drawerOpen]);
 
   const handleThemeChange = () => {
-    console.log("handleThemeChange");
-    console.log("colorMode", colorMode);
-    setColorMode(colorMode === "light" ? "dark" : "light");
+    handleSetColorMode();
   }
 
   const handleMenu = (event) => {

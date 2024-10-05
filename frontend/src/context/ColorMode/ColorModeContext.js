@@ -1,14 +1,25 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 
 const ColorModeContext = createContext();
 
 const ColorModeProvider = ({ children }) => {
   const [colorMode, setColorMode] = useState("light");
 
-  // todo: se o usuário tiver escolhido um tema no localStorage, use-o
+  function handleSetColorMode() {
+    setColorMode(colorMode === "light" ? "dark" : "light");
+    localStorage.setItem("deskrio-theme", colorMode === "light" ? "dark" : "light");
+  }
+
+  useEffect(() => {
+    const theme = localStorage.getItem("deskrio-theme");
+    console.log("theme", theme);
+    if (theme) {
+      setColorMode(theme);
+    }
+  }, []);
 
   return (
-    <ColorModeContext.Provider value={{ colorMode, setColorMode }}>
+    <ColorModeContext.Provider value={{ colorMode, handleSetColorMode }}>
       {children}
     </ColorModeContext.Provider>
   );

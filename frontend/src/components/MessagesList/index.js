@@ -45,8 +45,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   messagesList: {
-    // backgroundImage: `url(${whatsBackground})`,
-    backgroundImage: `url(${whatsBackgroundDark})`,
     display: "flex",
     flexDirection: "column",
     flexGrow: 1,
