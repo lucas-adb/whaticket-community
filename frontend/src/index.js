@@ -3,12 +3,15 @@ import ReactDOM from "react-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 import App from "./App";
+import { ColorModeProvider } from "./context/ColorMode/ColorModeContext";
 
 ReactDOM.render(
-	<CssBaseline>
-		<App />
-	</CssBaseline>,
-	document.getElementById("root")
+  <CssBaseline>
+    <ColorModeProvider>
+      <App />
+    </ColorModeProvider>
+  </CssBaseline>,
+  document.getElementById("root")
 );
 
 // ReactDOM.render(

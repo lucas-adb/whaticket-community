@@ -16,13 +16,10 @@ import Queues from "../pages/Queues/";
 import { AuthProvider } from "../context/Auth/AuthContext";
 import { WhatsAppsProvider } from "../context/WhatsApp/WhatsAppsContext";
 import Route from "./Route";
-import { ColorModeProvider } from "../context/ColorMode/ColorModeContext";
-
 const Routes = () => {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <ColorModeProvider>
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
@@ -55,7 +52,6 @@ const Routes = () => {
             </WhatsAppsProvider>
           </Switch>
           <ToastContainer autoClose={3000} />
-        </ColorModeProvider>
       </AuthProvider>
     </BrowserRouter>
   );
