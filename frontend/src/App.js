@@ -6,6 +6,7 @@ import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import { ptBR } from "@material-ui/core/locale";
 
 import { ColorModeContext } from "./context/ColorMode/ColorModeContext";
+import { blue, cyan, grey, red } from "@material-ui/core/colors";
 
 const App = () => {
   const [locale, setLocale] = useState();
@@ -25,6 +26,8 @@ const App = () => {
       },
       palette: {
         primary: { main: "#2576d2" },
+        // primary: { main: "#0BD953" },
+        text: { tertiary: "#0000001f" },
       },
     },
     locale
@@ -33,22 +36,33 @@ const App = () => {
   const darkTheme = createTheme({
     palette: {
       mode: 'dark',
+      primary: { main: "#0BD953", contrastText: "#101D25", light: "#232D36" },
+      secondary: { main: "#fc4338", contrastText: "#fff" },
+      // primary: { main: cyan['A400'], contrastText: "fff" },
       background: {
         // default: "#111111",
         paper: "#111111",
       },
       text: {
-        primary: "#ffffff",
+        primary: "#fff",
+        secondary: grey[300],
+        tertiary: grey[300],
       },
+    },
       fill: {
         primary: "#ffffff",
+        
       },
       icon: {
         primary: "#ffffff",
       },
+      // customBadge: {
+      //   backgroundColor: red[500],
+      //   color: "#fff",
+      // }
     },
     locale
-  });
+  );
 
   useEffect(() => {
     const i18nlocale = localStorage.getItem("i18nextLng");

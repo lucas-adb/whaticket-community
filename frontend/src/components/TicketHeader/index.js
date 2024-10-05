@@ -19,18 +19,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// const useStyles = makeStyles((theme) => ({
-//   ticketHeader: (props) => ({
-//     display: "flex",
-//     backgroundColor: props.mode === "dark" ? "#111" : "#fff",
-//     flex: "none",
-//     borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
-//     [theme.breakpoints.down("sm")]: {
-//       flexWrap: "wrap",
-//     },
-//   }),
-// }));
-
 const TicketHeader = ({ loading, children }) => {
   // const { colorMode } = useContext(ColorModeContext);
   // const classes = useStyles({ colorMode });

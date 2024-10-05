@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       height: "calc(100vh - 56px)",
     },
+    color: theme.palette.text.primary,
   },
 
   toolbar: {
@@ -111,6 +112,12 @@ const useStyles = makeStyles((theme) => ({
     overflow: "auto",
     flexDirection: "column",
   },
+  menuIcons: {
+    fill: theme.palette.text.primary,
+  },
+  divider: {
+    backgroundColor: theme.palette.text.tertiary,
+  }
 }));
 
 const LoggedInLayout = ({ children }) => {
@@ -189,14 +196,15 @@ const LoggedInLayout = ({ children }) => {
       >
         <div className={classes.toolbarIcon}>
           <IconButton onClick={() => setDrawerOpen(!drawerOpen)}>
-            <ChevronLeftIcon />
+            <ChevronLeftIcon className={classes.menuIcons} />
+            {/* <ChevronLeftIcon/> */}
           </IconButton>
         </div>
-        <Divider />
+        <Divider className={classes.divider} />
         <List>
           <MainListItems drawerClose={drawerClose} />
         </List>
-        <Divider />
+        <Divider className={classes.divider} />
       </Drawer>
       <UserModal
         open={userModalOpen}

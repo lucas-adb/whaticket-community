@@ -6,7 +6,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import Divider from "@material-ui/core/Divider";
-import { Badge } from "@material-ui/core";
+import { Badge, makeStyles } from "@material-ui/core";
 import DashboardOutlinedIcon from "@material-ui/icons/DashboardOutlined";
 import WhatsAppIcon from "@material-ui/icons/WhatsApp";
 import SyncAltIcon from "@material-ui/icons/SyncAlt";
@@ -20,6 +20,16 @@ import { i18n } from "../translate/i18n";
 import { WhatsAppsContext } from "../context/WhatsApp/WhatsAppsContext";
 import { AuthContext } from "../context/Auth/AuthContext";
 import { Can } from "../components/Can";
+
+const useStyles = makeStyles((theme) => ({
+  menuIcons: {
+    color: theme.palette.text.primary,
+  },
+  divider: {
+    // color: theme.palette.text.primary,
+    backgroundColor: theme.palette.text.tertiary,
+  }
+}));
 
 function ListItemLink(props) {
   const { icon, primary, to, className } = props;
@@ -47,6 +57,7 @@ const MainListItems = (props) => {
   const { whatsApps } = useContext(WhatsAppsContext);
   const { user } = useContext(AuthContext);
   const [connectionWarning, setConnectionWarning] = useState(false);
+  const classes = useStyles();
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -75,56 +86,56 @@ const MainListItems = (props) => {
       <ListItemLink
         to="/"
         primary="Dashboard"
-        icon={<DashboardOutlinedIcon />}
+        icon={<DashboardOutlinedIcon className={classes.menuIcons} />}
       />
       <ListItemLink
         to="/connections"
         primary={i18n.t("mainDrawer.listItems.connections")}
         icon={
           <Badge badgeContent={connectionWarning ? "!" : 0} color="error">
-            <SyncAltIcon />
+            <SyncAltIcon className={classes.menuIcons} />
           </Badge>
         }
       />
       <ListItemLink
         to="/tickets"
         primary={i18n.t("mainDrawer.listItems.tickets")}
-        icon={<WhatsAppIcon />}
+        icon={<WhatsAppIcon className={classes.menuIcons} />}
       />
 
       <ListItemLink
         to="/contacts"
         primary={i18n.t("mainDrawer.listItems.contacts")}
-        icon={<ContactPhoneOutlinedIcon />}
+        icon={<ContactPhoneOutlinedIcon className={classes.menuIcons} />}
       />
       <ListItemLink
         to="/quickAnswers"
         primary={i18n.t("mainDrawer.listItems.quickAnswers")}
-        icon={<QuestionAnswerOutlinedIcon />}
+        icon={<QuestionAnswerOutlinedIcon className={classes.menuIcons} />}
       />
       <Can
         role={user.profile}
         perform="drawer-admin-items:view"
         yes={() => (
           <>
-            <Divider />
+            <Divider className={classes.divider} />
             <ListSubheader inset>
               {i18n.t("mainDrawer.listItems.administration")}
             </ListSubheader>
             <ListItemLink
               to="/users"
               primary={i18n.t("mainDrawer.listItems.users")}
-              icon={<PeopleAltOutlinedIcon />}
+              icon={<PeopleAltOutlinedIcon className={classes.menuIcons} />}
             />
             <ListItemLink
               to="/queues"
               primary={i18n.t("mainDrawer.listItems.queues")}
-              icon={<AccountTreeOutlinedIcon />}
+              icon={<AccountTreeOutlinedIcon className={classes.menuIcons} />}
             />
             <ListItemLink
               to="/settings"
               primary={i18n.t("mainDrawer.listItems.settings")}
-              icon={<SettingsOutlinedIcon />}
+              icon={<SettingsOutlinedIcon className={classes.menuIcons} />}
             />
           </>
         )}
