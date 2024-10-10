@@ -16,13 +16,15 @@ import { i18n } from "../../translate/i18n";
 import Title from "./Title";
 import useTickets from "../../hooks/useTickets";
 
-const Chart = ({ selectedDate }) => {
+const Chart = ({ selectedDate, selectedUser }) => {
   const theme = useTheme();
 
   // const date = useRef(new Date().toISOString());
   // const { tickets } = useTickets({ date: date.current });
 
   const { tickets } = useTickets({ date: selectedDate });
+
+  console.log("tickets", tickets);
 
   const [chartData, setChartData] = useState([
     { time: "08:00", amount: 0 },
@@ -61,7 +63,9 @@ const Chart = ({ selectedDate }) => {
       let aux = [...prevState];
 
       aux.forEach((a) => {
-        tickets.forEach((ticket) => {
+        tickets
+          .filter((ticket) => !selectedUser || ticket.userId === selectedUser)
+          .forEach((ticket) => {
           format(startOfHour(parseISO(ticket.createdAt)), "HH:mm") === a.time &&
             a.amount++;
         });
@@ -69,13 +73,11 @@ const Chart = ({ selectedDate }) => {
 
       return aux;
     });
-  }, [tickets]);
+  }, [tickets, selectedUser]);
 
   return (
     <React.Fragment>
-      <Title>{`${i18n.t("dashboard.charts.perDay.title")}${
-        tickets.length
-      }`}</Title>
+      <Title>{`${i18n.t("dashboard.charts.perDay.title")}${chartData.reduce((sum, dataPoint) => sum + dataPoint.amount, 0)}`}</Title>
       <ResponsiveContainer>
         <BarChart
           data={chartData}
