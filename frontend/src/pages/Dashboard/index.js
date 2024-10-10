@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 
 import Paper from "@material-ui/core/Paper"
 import Container from "@material-ui/core/Container"
@@ -13,6 +13,7 @@ import { AuthContext } from "../../context/Auth/AuthContext";
 import { i18n } from "../../translate/i18n";
 
 import Chart from "./Chart"
+import BasicDatePicker from "../../components/BasicDatePicker"
 
 const useStyles = makeStyles(theme => ({
 	container: {
@@ -44,6 +45,10 @@ const useStyles = makeStyles(theme => ({
 
 const Dashboard = () => {
 	const classes = useStyles()
+
+	const [selectedDate, setSelectedDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
 
 	const { user } = useContext(AuthContext);
 	var userQueueIds = [];
@@ -105,7 +110,12 @@ const Dashboard = () => {
 					</Grid>
 					<Grid item xs={12}>
 						<Paper className={classes.fixedHeightPaper}>
-							<Chart />
+							<Chart selectedDate={selectedDate} />
+						</Paper>
+					</Grid>
+					<Grid item xs={12}>
+						<Paper className={classes.fixedHeightPaper}>
+							<BasicDatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
 						</Paper>
 					</Grid>
 				</Grid>
