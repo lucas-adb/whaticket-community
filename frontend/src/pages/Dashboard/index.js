@@ -15,6 +15,7 @@ import Chart from "./Chart";
 import BasicDatePicker from "../../components/BasicDatePicker";
 import api from "../../services/api";
 import toastError from "../../errors/toastError";
+import { WhatsAppsContext } from "../../context/WhatsApp/WhatsAppsContext";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -50,6 +51,7 @@ const Dashboard = () => {
   const { user } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
+  const [selectedWhatsApp, setSelectedWhatsApp] = useState("");
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -63,9 +65,14 @@ const Dashboard = () => {
     fetchUsers();
   }, []);
 
+  const { whatsApps, loading } = useContext(WhatsAppsContext);
+
   const handleUserChange = (event) => {
-		console.log("selected user: ", event.target.value);
     setSelectedUser(event.target.value);
+  };
+
+  const handleConnectionChange = (event) => {
+    setSelectedWhatsApp(event.target.value);
   };
 
   var userQueueIds = [];
@@ -134,11 +141,9 @@ const Dashboard = () => {
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <FormControl fullWidth>
-              <Select value={selectedUser} onChange={handleUserChange} displayEmpty>
-                <MenuItem value="" disabled>
-                  {/* {i18n.t("dashboard.selectUser")} */}
-									Selecione um usuário
+              <Select value={selectedUser} onChange={handleUserChange} displayEmpty fullWidth>
+                <MenuItem value="">
+                  Selecione um usuário
                 </MenuItem>
                 {users.map((user) => (
                   <MenuItem key={user.id} value={user.id}>
@@ -146,7 +151,16 @@ const Dashboard = () => {
                   </MenuItem>
                 ))}
               </Select>
-            </FormControl>
+              <Select value={selectedWhatsApp} onChange={handleConnectionChange} displayEmpty fullWidth>
+                <MenuItem value="">
+                  Selecione uma conexão
+                </MenuItem>
+                {whatsApps.map((wpp) => (
+                  <MenuItem key={wpp.id} value={wpp.id}>
+                    {wpp.name}
+                  </MenuItem>
+                ))}
+              </Select>
           </Grid>
         </Grid>
       </Container>
