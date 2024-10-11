@@ -47,7 +47,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
   const classes = useStyles();
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]);
+  // const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]);
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString());
   const { user } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
@@ -132,7 +133,7 @@ const Dashboard = () => {
           </Grid>
           <Grid item xs={12}>
             <Paper className={classes.fixedHeightPaper}>
-              <Chart selectedDate={selectedDate} selectedUser={selectedUser} />
+              <Chart selectedDate={selectedDate} selectedUser={selectedUser} selectedConnection={selectedWhatsApp} />
             </Paper>
           </Grid>
           <Grid item xs={12}>

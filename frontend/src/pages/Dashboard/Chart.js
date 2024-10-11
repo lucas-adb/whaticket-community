@@ -16,7 +16,7 @@ import { i18n } from "../../translate/i18n";
 import Title from "./Title";
 import useTickets from "../../hooks/useTickets";
 
-const Chart = ({ selectedDate, selectedUser }) => {
+const Chart = ({ selectedDate, selectedUser, selectedConnection }) => {
   const theme = useTheme();
 
   // const date = useRef(new Date().toISOString());
@@ -65,6 +65,7 @@ const Chart = ({ selectedDate, selectedUser }) => {
       aux.forEach((a) => {
         tickets
           .filter((ticket) => !selectedUser || ticket.userId === selectedUser)
+          .filter((ticket) => !selectedConnection || ticket.whatsappId === selectedConnection)
           .forEach((ticket) => {
           format(startOfHour(parseISO(ticket.createdAt)), "HH:mm") === a.time &&
             a.amount++;
