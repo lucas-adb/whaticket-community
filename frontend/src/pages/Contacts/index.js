@@ -118,6 +118,7 @@ const Contacts = () => {
             params: { searchParam, pageNumber },
           });
           dispatch({ type: "LOAD_CONTACTS", payload: data.contacts });
+          console.log("contacts", data.contacts);
           setHasMore(data.hasMore);
           setLoading(false);
         } catch (err) {

@@ -53,6 +53,8 @@ const Dashboard = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
   const [selectedWhatsApp, setSelectedWhatsApp] = useState("");
+  const [queues, setQueues] = useState([]);
+  const [selectedQueue, setSelectedQueue] = useState("");
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -66,6 +68,18 @@ const Dashboard = () => {
     fetchUsers();
   }, []);
 
+  useEffect(() => {
+    const fetchQueues = async () => {
+      try {
+        const { data } = await api.get("/queue");
+        setQueues(data);
+      } catch (err) {
+        toastError(err);
+      }
+    };
+    fetchQueues();
+  }, []);
+
   const { whatsApps, loading } = useContext(WhatsAppsContext);
 
   const handleUserChange = (event) => {
@@ -74,6 +88,10 @@ const Dashboard = () => {
 
   const handleConnectionChange = (event) => {
     setSelectedWhatsApp(event.target.value);
+  };
+
+  const handleQueueChange = (event) => {
+    setSelectedQueue(event.target.value);
   };
 
   var userQueueIds = [];
@@ -96,7 +114,10 @@ const Dashboard = () => {
       <Container maxWidth="lg" className={classes.container}>
         <Grid container spacing={3}>
           <Grid item xs={4}>
-            <Paper className={classes.customFixedHeightPaper} style={{ overflow: "hidden" }}>
+            <Paper
+              className={classes.customFixedHeightPaper}
+              style={{ overflow: "hidden" }}
+            >
               <Typography component="h3" variant="h6" color="primary" paragraph>
                 {i18n.t("dashboard.messages.inAttendance.title")}
               </Typography>
@@ -108,7 +129,10 @@ const Dashboard = () => {
             </Paper>
           </Grid>
           <Grid item xs={4}>
-            <Paper className={classes.customFixedHeightPaper} style={{ overflow: "hidden" }}>
+            <Paper
+              className={classes.customFixedHeightPaper}
+              style={{ overflow: "hidden" }}
+            >
               <Typography component="h3" variant="h6" color="primary" paragraph>
                 {i18n.t("dashboard.messages.waiting.title")}
               </Typography>
@@ -120,7 +144,10 @@ const Dashboard = () => {
             </Paper>
           </Grid>
           <Grid item xs={4}>
-            <Paper className={classes.customFixedHeightPaper} style={{ overflow: "hidden" }}>
+            <Paper
+              className={classes.customFixedHeightPaper}
+              style={{ overflow: "hidden" }}
+            >
               <Typography component="h3" variant="h6" color="primary" paragraph>
                 {i18n.t("dashboard.messages.closed.title")}
               </Typography>
@@ -133,35 +160,62 @@ const Dashboard = () => {
           </Grid>
           <Grid item xs={12}>
             <Paper className={classes.fixedHeightPaper}>
-              <Chart selectedDate={selectedDate} selectedUser={selectedUser} selectedConnection={selectedWhatsApp} />
+              <Chart
+                selectedDate={selectedDate}
+                selectedUser={selectedUser}
+                selectedConnection={selectedWhatsApp}
+                selectedQueue={selectedQueue}
+              />
             </Paper>
           </Grid>
           <Grid item xs={12}>
             <Paper className={classes.fixedHeightPaper}>
-              <BasicDatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+              <BasicDatePicker
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+              />
             </Paper>
           </Grid>
           <Grid item xs={12}>
-              <Select value={selectedUser} onChange={handleUserChange} displayEmpty fullWidth>
-                <MenuItem value="">
-                  Selecione um usuário
+            <Select
+              value={selectedUser}
+              onChange={handleUserChange}
+              displayEmpty
+              fullWidth
+            >
+              <MenuItem value="">Selecione um usuário</MenuItem>
+              {users.map((user) => (
+                <MenuItem key={user.id} value={user.id}>
+                  {user.name}
                 </MenuItem>
-                {users.map((user) => (
-                  <MenuItem key={user.id} value={user.id}>
-                    {user.name}
-                  </MenuItem>
-                ))}
-              </Select>
-              <Select value={selectedWhatsApp} onChange={handleConnectionChange} displayEmpty fullWidth>
-                <MenuItem value="">
-                  Selecione uma conexão
+              ))}
+            </Select>
+            <Select
+              value={selectedWhatsApp}
+              onChange={handleConnectionChange}
+              displayEmpty
+              fullWidth
+            >
+              <MenuItem value="">Selecione uma conexão</MenuItem>
+              {whatsApps.map((wpp) => (
+                <MenuItem key={wpp.id} value={wpp.id}>
+                  {wpp.name}
                 </MenuItem>
-                {whatsApps.map((wpp) => (
-                  <MenuItem key={wpp.id} value={wpp.id}>
-                    {wpp.name}
-                  </MenuItem>
-                ))}
-              </Select>
+              ))}
+            </Select>
+            <Select
+              value={selectedQueue}
+              onChange={handleQueueChange}
+              displayEmpty
+              fullWidth
+            >
+              <MenuItem value="">Selecione uma fila</MenuItem>
+              {queues.map((q) => (
+                <MenuItem key={q.id} value={q.id}>
+                  {q.name}
+                </MenuItem>
+              ))}
+            </Select>
           </Grid>
         </Grid>
       </Container>

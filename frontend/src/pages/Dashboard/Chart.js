@@ -16,7 +16,12 @@ import { i18n } from "../../translate/i18n";
 import Title from "./Title";
 import useTickets from "../../hooks/useTickets";
 
-const Chart = ({ selectedDate, selectedUser, selectedConnection }) => {
+const Chart = ({
+  selectedDate,
+  selectedUser,
+  selectedConnection,
+  selectedQueue,
+}) => {
   const theme = useTheme();
 
   // const date = useRef(new Date().toISOString());
@@ -25,6 +30,7 @@ const Chart = ({ selectedDate, selectedUser, selectedConnection }) => {
   const { tickets } = useTickets({ date: selectedDate });
 
   console.log("tickets", tickets);
+  // console.log("selectedConnection", selectedConnection);
 
   const [chartData, setChartData] = useState([
     { time: "08:00", amount: 0 },
@@ -63,10 +69,9 @@ const Chart = ({ selectedDate, selectedUser, selectedConnection }) => {
       let aux = [...prevState];
 
       aux.forEach((a) => {
-        tickets
-          .filter((ticket) => !selectedUser || ticket.userId === selectedUser)
-          .filter((ticket) => !selectedConnection || ticket.whatsappId === selectedConnection)
-          .forEach((ticket) => {
+        const ticketsFiltered = filterTickets(tickets);
+
+        ticketsFiltered.forEach((ticket) => {
           format(startOfHour(parseISO(ticket.createdAt)), "HH:mm") === a.time &&
             a.amount++;
         });
@@ -74,11 +79,26 @@ const Chart = ({ selectedDate, selectedUser, selectedConnection }) => {
 
       return aux;
     });
-  }, [tickets, selectedUser]);
+  }, [tickets, selectedUser, selectedConnection, selectedQueue]);
+
+  function filterTickets(tickets) {
+    const ticketsFiltered = tickets
+      .filter((ticket) => !selectedUser || ticket.userId === selectedUser)
+      .filter(
+        (ticket) =>
+          !selectedConnection || ticket.whatsappId === selectedConnection
+      )
+      .filter((ticket) => !selectedQueue || ticket.queueId === selectedQueue);
+
+    return ticketsFiltered;
+  }
 
   return (
     <React.Fragment>
-      <Title>{`${i18n.t("dashboard.charts.perDay.title")}${chartData.reduce((sum, dataPoint) => sum + dataPoint.amount, 0)}`}</Title>
+      <Title>{`${i18n.t("dashboard.charts.perDay.title")}${chartData.reduce(
+        (sum, dataPoint) => sum + dataPoint.amount,
+        0
+      )}`}</Title>
       <ResponsiveContainer>
         <BarChart
           data={chartData}

@@ -32,7 +32,7 @@ const App = () => {
 
   const darkTheme = createTheme({
     palette: {
-      mode: 'dark',
+      mode: "dark",
       background: {
         // default: "#111111",
         paper: "#111111",
@@ -47,7 +47,7 @@ const App = () => {
         primary: "#ffffff",
       },
     },
-    locale
+    locale,
   });
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const App = () => {
   }, []);
 
   return (
-    <ThemeProvider theme={colorMode === 'dark' ? darkTheme : theme}>
+    <ThemeProvider theme={colorMode === "dark" ? darkTheme : theme}>
       <Routes />
     </ThemeProvider>
   );
