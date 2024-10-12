@@ -35,6 +35,8 @@ const reducer = (state, action) => {
     const users = action.payload;
     const newUsers = [];
 
+    console.log("users", users);
+
     users.forEach((user) => {
       const userIndex = state.findIndex((u) => u.id === user.id);
       if (userIndex !== -1) {

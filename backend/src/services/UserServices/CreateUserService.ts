@@ -50,6 +50,7 @@ const CreateUserService = async ({
   try {
     await schema.validate({ email, password, name });
   } catch (err) {
+    // @ts-ignore
     throw new AppError(err.message);
   }
 

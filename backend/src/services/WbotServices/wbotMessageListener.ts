@@ -107,6 +107,7 @@ const verifyMediaMessage = async (
     );
   } catch (err) {
     Sentry.captureException(err);
+    // @ts-ignore
     logger.error(err);
   }
 

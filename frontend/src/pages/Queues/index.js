@@ -100,6 +100,7 @@ const Queues = () => {
       setLoading(true);
       try {
         const { data } = await api.get("/queue");
+        console.log("queues", data);
         dispatch({ type: "LOAD_QUEUES", payload: data });
 
         setLoading(false);

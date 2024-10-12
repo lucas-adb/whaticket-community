@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Routes from "./routes";
 import "react-toastify/dist/ReactToastify.css";
 
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import { ptBR } from "@material-ui/core/locale";
 
+import { ColorModeContext } from "./context/ColorMode/ColorModeContext";
+
 const App = () => {
   const [locale, setLocale] = useState();
+  const { colorMode } = useContext(ColorModeContext);
 
   const theme = createTheme(
     {
@@ -27,6 +30,26 @@ const App = () => {
     locale
   );
 
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+      background: {
+        // default: "#111111",
+        paper: "#111111",
+      },
+      text: {
+        primary: "#ffffff",
+      },
+      fill: {
+        primary: "#ffffff",
+      },
+      icon: {
+        primary: "#ffffff",
+      },
+    },
+    locale,
+  });
+
   useEffect(() => {
     const i18nlocale = localStorage.getItem("i18nextLng");
     const browserLocale =
@@ -38,7 +61,7 @@ const App = () => {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={colorMode === "dark" ? darkTheme : theme}>
       <Routes />
     </ThemeProvider>
   );
