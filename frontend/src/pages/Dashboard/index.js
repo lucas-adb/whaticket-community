@@ -17,6 +17,8 @@ import api from "../../services/api";
 import toastError from "../../errors/toastError";
 import { WhatsAppsContext } from "../../context/WhatsApp/WhatsAppsContext";
 import { set } from "date-fns";
+import { InputLabel } from "@material-ui/core";
+import { FilterForm } from "../../components/FilterForm";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -120,7 +122,7 @@ const Dashboard = () => {
 
   const getTicketsContact = (tickets) => {
     const contacts = [];
-    tickets.map((ticket) => {
+    tickets.forEach((ticket) => {
       if (ticket.contact) {
         contacts.push(ticket.contact);
       }
@@ -229,6 +231,7 @@ const Dashboard = () => {
               />
             </Paper>
           </Grid>
+
           <Grid item xs={12}>
             <Paper className={classes.fixedHeightPaper}>
               <BasicDatePicker
@@ -237,59 +240,22 @@ const Dashboard = () => {
               />
             </Paper>
           </Grid>
-          <Grid item xs={12}>
-            <Select
-              value={selectedUser}
-              onChange={handleUserChange}
-              displayEmpty
-              fullWidth
-            >
-              <MenuItem value="">Selecione um usuário</MenuItem>
-              {users.map((user) => (
-                <MenuItem key={user.id} value={user.id}>
-                  {user.name}
-                </MenuItem>
-              ))}
-            </Select>
-            <Select
-              value={selectedWhatsApp}
-              onChange={handleConnectionChange}
-              displayEmpty
-              fullWidth
-            >
-              <MenuItem value="">Selecione uma conexão</MenuItem>
-              {whatsApps.map((wpp) => (
-                <MenuItem key={wpp.id} value={wpp.id}>
-                  {wpp.name}
-                </MenuItem>
-              ))}
-            </Select>
-            <Select
-              value={selectedQueue}
-              onChange={handleQueueChange}
-              displayEmpty
-              fullWidth
-            >
-              <MenuItem value="">Selecione uma fila</MenuItem>
-              {queues.map((q) => (
-                <MenuItem key={q.id} value={q.id}>
-                  {q.name}
-                </MenuItem>
-              ))}
-            </Select>
-            <Select
-              value={selectedContact}
-              onChange={handleContactChange}
-              displayEmpty
-              fullWidth
-            >
-              <MenuItem value="">Selecione um contato</MenuItem>
-              {contacts.map((c) => (
-                <MenuItem key={c.id} value={c.id}>
-                  {c.name}
-                </MenuItem>
-              ))}
-            </Select>
+
+          <Grid item xs={12} v>
+            <FilterForm
+              selectedUser={selectedUser}
+              handleUserChange={handleUserChange}
+              users={users}
+              selectedWhatsApp={selectedWhatsApp}
+              handleConnectionChange={handleConnectionChange}
+              whatsApps={whatsApps}
+              selectedQueue={selectedQueue}
+              handleQueueChange={handleQueueChange}
+              queues={queues}
+              selectedContact={selectedContact}
+              handleContactChange={handleContactChange}
+              contacts={contacts}
+            />
           </Grid>
         </Grid>
       </Container>
