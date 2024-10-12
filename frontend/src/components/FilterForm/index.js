@@ -1,5 +1,6 @@
 import React from "react";
 import { FilterFormSelect } from "../FilterFormSelect";
+import { Input } from "@material-ui/core";
 
 // const useStyles = makeStyles((theme) => ({
 //   labelStatic: {
@@ -30,6 +31,7 @@ export function FilterForm({
 
   return (
     <>
+      <Input type="date" />
       <FilterFormSelect
         id="user-select"
         label="Usuário"
