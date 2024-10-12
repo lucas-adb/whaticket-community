@@ -97,7 +97,11 @@ const Chart = ({
 
   return (
     <React.Fragment>
-      <Title>{`${i18n.t("dashboard.charts.perDay.title")}${chartData.reduce(
+      {/* <Title>{`${i18n.t("dashboard.charts.perDay.title")}${chartData.reduce(
+        (sum, dataPoint) => sum + dataPoint.amount,
+        0
+      )}`}</Title> */}
+      <Title>{`Ticket do dia: ${chartData.reduce(
         (sum, dataPoint) => sum + dataPoint.amount,
         0
       )}`}</Title>

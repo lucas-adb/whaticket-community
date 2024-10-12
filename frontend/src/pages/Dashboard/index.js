@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     // height: 240,
     height: 360,
+    // maxHeight: 360,
   },
   customFixedHeightPaper: {
     padding: theme.spacing(2),
@@ -47,6 +48,9 @@ const useStyles = makeStyles((theme) => ({
     overflow: "auto",
     flexDirection: "column",
     height: "100%",
+  },
+  customPadding: {
+    padding: theme.spacing(2),
   },
 }));
 
@@ -149,6 +153,40 @@ const Dashboard = () => {
     <div>
       <Container maxWidth="lg" className={classes.container}>
         <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Paper className={classes.customPadding}>
+              <FilterForm
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+                selectedUser={selectedUser}
+                handleUserChange={handleUserChange}
+                users={users}
+                selectedWhatsApp={selectedWhatsApp}
+                handleConnectionChange={handleConnectionChange}
+                whatsApps={whatsApps}
+                selectedQueue={selectedQueue}
+                handleQueueChange={handleQueueChange}
+                queues={queues}
+                selectedContact={selectedContact}
+                handleContactChange={handleContactChange}
+                contacts={contacts}
+              />
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Paper className={classes.fixedHeightPaper}>
+              <Chart
+                tickets={tickets}
+                selectedDate={selectedDate}
+                selectedUser={selectedUser}
+                selectedConnection={selectedWhatsApp}
+                selectedQueue={selectedQueue}
+                selectedContact={selectedContact}
+              />
+            </Paper>
+          </Grid>
+
           <Grid item xs={4}>
             <Paper
               className={classes.customFixedHeightPaper}
@@ -199,38 +237,6 @@ const Dashboard = () => {
             <Paper className={classes.fixedHeightPaper}>
               <CustomPieChart data={pieChartData} />
             </Paper>
-          </Grid>
-
-          <Grid item xs={12}>
-            <Paper className={classes.fixedHeightPaper}>
-              <Chart
-                tickets={tickets}
-                selectedDate={selectedDate}
-                selectedUser={selectedUser}
-                selectedConnection={selectedWhatsApp}
-                selectedQueue={selectedQueue}
-                selectedContact={selectedContact}
-              />
-            </Paper>
-          </Grid>
-
-          <Grid item xs={12}>
-            <FilterForm
-              selectedDate={selectedDate}
-              setSelectedDate={setSelectedDate}
-              selectedUser={selectedUser}
-              handleUserChange={handleUserChange}
-              users={users}
-              selectedWhatsApp={selectedWhatsApp}
-              handleConnectionChange={handleConnectionChange}
-              whatsApps={whatsApps}
-              selectedQueue={selectedQueue}
-              handleQueueChange={handleQueueChange}
-              queues={queues}
-              selectedContact={selectedContact}
-              handleContactChange={handleContactChange}
-              contacts={contacts}
-            />
           </Grid>
         </Grid>
       </Container>
