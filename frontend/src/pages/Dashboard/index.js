@@ -4,20 +4,21 @@ import Paper from "@material-ui/core/Paper";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
+// import FormControl from "@material-ui/core/FormControl";
+// import Select from "@material-ui/core/Select";
+// import MenuItem from "@material-ui/core/MenuItem";
 
 import useTickets from "../../hooks/useTickets";
 import { AuthContext } from "../../context/Auth/AuthContext";
 import { i18n } from "../../translate/i18n";
 import Chart from "./Chart";
-import BasicDatePicker from "../../components/BasicDatePicker";
+import CustomPieChart from "../../components/PieChart";
+// import BasicDatePicker from "../../components/BasicDatePicker";
 import api from "../../services/api";
 import toastError from "../../errors/toastError";
 import { WhatsAppsContext } from "../../context/WhatsApp/WhatsAppsContext";
-import { set } from "date-fns";
-import { InputLabel } from "@material-ui/core";
+// import { set } from "date-fns";
+// import { InputLabel } from "@material-ui/core";
 import { FilterForm } from "../../components/FilterForm";
 
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     overflow: "auto",
     flexDirection: "column",
-    height: 240,
+    // height: 240,
+    height: 360,
   },
   customFixedHeightPaper: {
     padding: theme.spacing(2),
@@ -137,6 +139,12 @@ const Dashboard = () => {
     }
   }, [tickets]);
 
+  const pieChartData = [
+    { name: "Em Atendimento", value: GetTickets("open", "true", "false") },
+    { name: "Aguardando", value: GetTickets("pending", "true", "false") },
+    { name: "Finalizados", value: GetTickets("closed", "true", "false") },
+  ];
+
   return (
     <div>
       <Container maxWidth="lg" className={classes.container}>
@@ -187,7 +195,53 @@ const Dashboard = () => {
             </Paper>
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid item xs={12}>
+            <Paper className={classes.fixedHeightPaper}>
+              <CustomPieChart data={pieChartData} />
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Paper className={classes.fixedHeightPaper}>
+              <Chart
+                tickets={tickets}
+                selectedDate={selectedDate}
+                selectedUser={selectedUser}
+                selectedConnection={selectedWhatsApp}
+                selectedQueue={selectedQueue}
+                selectedContact={selectedContact}
+              />
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12}>
+            <FilterForm
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              selectedUser={selectedUser}
+              handleUserChange={handleUserChange}
+              users={users}
+              selectedWhatsApp={selectedWhatsApp}
+              handleConnectionChange={handleConnectionChange}
+              whatsApps={whatsApps}
+              selectedQueue={selectedQueue}
+              handleQueueChange={handleQueueChange}
+              queues={queues}
+              selectedContact={selectedContact}
+              handleContactChange={handleContactChange}
+              contacts={contacts}
+            />
+          </Grid>
+        </Grid>
+      </Container>
+    </div>
+  );
+};
+
+export default Dashboard;
+
+{
+  /* <Grid item xs={4}>
             <Paper
               className={classes.customFixedHeightPaper}
               style={{ overflow: "hidden" }}
@@ -217,52 +271,5 @@ const Dashboard = () => {
                 </Typography>
               </Grid>
             </Paper>
-          </Grid>
-
-          <Grid item xs={12}>
-            <Paper className={classes.fixedHeightPaper}>
-              <Chart
-                tickets={tickets}
-                selectedDate={selectedDate}
-                selectedUser={selectedUser}
-                selectedConnection={selectedWhatsApp}
-                selectedQueue={selectedQueue}
-                selectedContact={selectedContact}
-              />
-            </Paper>
-          </Grid>
-
-          {/* <Grid item xs={12}>
-            <Paper className={classes.fixedHeightPaper}>
-              <BasicDatePicker
-                selectedDate={selectedDate}
-                setSelectedDate={setSelectedDate}
-              />
-            </Paper>
-          </Grid> */}
-
-          <Grid item xs={12} v>
-            <FilterForm
-              selectedDate={selectedDate}
-              setSelectedDate={setSelectedDate}
-              selectedUser={selectedUser}
-              handleUserChange={handleUserChange}
-              users={users}
-              selectedWhatsApp={selectedWhatsApp}
-              handleConnectionChange={handleConnectionChange}
-              whatsApps={whatsApps}
-              selectedQueue={selectedQueue}
-              handleQueueChange={handleQueueChange}
-              queues={queues}
-              selectedContact={selectedContact}
-              handleContactChange={handleContactChange}
-              contacts={contacts}
-            />
-          </Grid>
-        </Grid>
-      </Container>
-    </div>
-  );
-};
-
-export default Dashboard;
+          </Grid> */
+}
