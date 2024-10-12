@@ -16,6 +16,7 @@ import BasicDatePicker from "../../components/BasicDatePicker";
 import api from "../../services/api";
 import toastError from "../../errors/toastError";
 import { WhatsAppsContext } from "../../context/WhatsApp/WhatsAppsContext";
+import { set } from "date-fns";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -47,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
   const classes = useStyles();
-  // const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString());
   const { user } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
@@ -55,6 +55,10 @@ const Dashboard = () => {
   const [selectedWhatsApp, setSelectedWhatsApp] = useState("");
   const [queues, setQueues] = useState([]);
   const [selectedQueue, setSelectedQueue] = useState("");
+  const [contacts, setContacts] = useState([]);
+  const [selectedContact, setSelectedContact] = useState("");
+
+  const { tickets } = useTickets({ date: selectedDate });
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -94,20 +98,42 @@ const Dashboard = () => {
     setSelectedQueue(event.target.value);
   };
 
+  const handleContactChange = (event) => {
+    setSelectedContact(event.target.value);
+  };
+
   var userQueueIds = [];
   if (user.queues && user.queues.length > 0) {
     userQueueIds = user.queues.map((q) => q.id);
   }
 
-  const GetTickets = (status, showAll, withUnreadMessages) => {
+  const GetTickets = (status, showAll, withUnreadMessages, date) => {
     const { count } = useTickets({
       status: status,
       showAll: showAll,
       withUnreadMessages: withUnreadMessages,
       queueIds: JSON.stringify(userQueueIds),
+      date: date,
     });
     return count;
   };
+
+  const getTicketsContact = (tickets) => {
+    const contacts = [];
+    tickets.map((ticket) => {
+      if (ticket.contact) {
+        contacts.push(ticket.contact);
+      }
+    });
+    console.log("contacts", contacts);
+    setContacts(contacts);
+  };
+
+  useEffect(() => {
+    if (tickets.length > 0) {
+      getTicketsContact(tickets);
+    }
+  }, [tickets]);
 
   return (
     <div>
@@ -158,13 +184,48 @@ const Dashboard = () => {
               </Grid>
             </Paper>
           </Grid>
+
+          <Grid item xs={4}>
+            <Paper
+              className={classes.customFixedHeightPaper}
+              style={{ overflow: "hidden" }}
+            >
+              <Typography component="h3" variant="h6" color="primary" paragraph>
+                Total de Tickets
+              </Typography>
+              <Grid item>
+                <Typography component="h1" variant="h4">
+                  {GetTickets()}
+                </Typography>
+              </Grid>
+            </Paper>
+          </Grid>
+
+          <Grid item xs={4}>
+            <Paper
+              className={classes.customFixedHeightPaper}
+              style={{ overflow: "hidden" }}
+            >
+              <Typography component="h3" variant="h6" color="primary" paragraph>
+                Tickets criados no dia
+              </Typography>
+              <Grid item>
+                <Typography component="h1" variant="h4">
+                  {GetTickets("", "", "", selectedDate)}
+                </Typography>
+              </Grid>
+            </Paper>
+          </Grid>
+
           <Grid item xs={12}>
             <Paper className={classes.fixedHeightPaper}>
               <Chart
+                tickets={tickets}
                 selectedDate={selectedDate}
                 selectedUser={selectedUser}
                 selectedConnection={selectedWhatsApp}
                 selectedQueue={selectedQueue}
+                selectedContact={selectedContact}
               />
             </Paper>
           </Grid>
@@ -213,6 +274,19 @@ const Dashboard = () => {
               {queues.map((q) => (
                 <MenuItem key={q.id} value={q.id}>
                   {q.name}
+                </MenuItem>
+              ))}
+            </Select>
+            <Select
+              value={selectedContact}
+              onChange={handleContactChange}
+              displayEmpty
+              fullWidth
+            >
+              <MenuItem value="">Selecione um contato</MenuItem>
+              {contacts.map((c) => (
+                <MenuItem key={c.id} value={c.id}>
+                  {c.name}
                 </MenuItem>
               ))}
             </Select>

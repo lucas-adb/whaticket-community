@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useTheme } from "@material-ui/core/styles";
 import {
   BarChart,
@@ -14,23 +14,16 @@ import { startOfHour, parseISO, format } from "date-fns";
 import { i18n } from "../../translate/i18n";
 
 import Title from "./Title";
-import useTickets from "../../hooks/useTickets";
 
 const Chart = ({
+  tickets,
   selectedDate,
   selectedUser,
   selectedConnection,
   selectedQueue,
+  selectedContact,
 }) => {
   const theme = useTheme();
-
-  // const date = useRef(new Date().toISOString());
-  // const { tickets } = useTickets({ date: date.current });
-
-  const { tickets } = useTickets({ date: selectedDate });
-
-  console.log("tickets", tickets);
-  // console.log("selectedConnection", selectedConnection);
 
   const [chartData, setChartData] = useState([
     { time: "08:00", amount: 0 },
@@ -79,7 +72,13 @@ const Chart = ({
 
       return aux;
     });
-  }, [tickets, selectedUser, selectedConnection, selectedQueue]);
+  }, [
+    tickets,
+    selectedUser,
+    selectedConnection,
+    selectedQueue,
+    selectedContact,
+  ]);
 
   function filterTickets(tickets) {
     const ticketsFiltered = tickets
@@ -88,7 +87,10 @@ const Chart = ({
         (ticket) =>
           !selectedConnection || ticket.whatsappId === selectedConnection
       )
-      .filter((ticket) => !selectedQueue || ticket.queueId === selectedQueue);
+      .filter((ticket) => !selectedQueue || ticket.queueId === selectedQueue)
+      .filter(
+        (ticket) => !selectedContact || ticket.contactId === selectedContact
+      );
 
     return ticketsFiltered;
   }
