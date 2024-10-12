@@ -1,5 +1,5 @@
 import { FormControl, Input, InputLabel, makeStyles } from "@material-ui/core";
-import React from "react";
+import React, { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   formField: {
@@ -14,6 +14,13 @@ export default function BasicDatePicker({ selectedDate, setSelectedDate }) {
     console.log("date selected: ", event.target.value);
     setSelectedDate(event.target.value);
   };
+
+  // useEffect to prevent errors when user clicks on clear button
+  useEffect(() => {
+    if (selectedDate === "") {
+      setSelectedDate(new Date().toISOString());
+    }
+  }, [selectedDate]);
 
   return (
     <FormControl margin="normal" className={classes.formField}>
