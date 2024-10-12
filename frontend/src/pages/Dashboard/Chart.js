@@ -58,6 +58,21 @@ const Chart = ({
 
     setChartData(resetChartData);
 
+    function filterTickets(tickets) {
+      const ticketsFiltered = tickets
+        .filter((ticket) => !selectedUser || ticket.userId === selectedUser)
+        .filter(
+          (ticket) =>
+            !selectedConnection || ticket.whatsappId === selectedConnection
+        )
+        .filter((ticket) => !selectedQueue || ticket.queueId === selectedQueue)
+        .filter(
+          (ticket) => !selectedContact || ticket.contactId === selectedContact
+        );
+
+      return ticketsFiltered;
+    }
+
     setChartData((prevState) => {
       let aux = [...prevState];
 
@@ -79,21 +94,6 @@ const Chart = ({
     selectedQueue,
     selectedContact,
   ]);
-
-  function filterTickets(tickets) {
-    const ticketsFiltered = tickets
-      .filter((ticket) => !selectedUser || ticket.userId === selectedUser)
-      .filter(
-        (ticket) =>
-          !selectedConnection || ticket.whatsappId === selectedConnection
-      )
-      .filter((ticket) => !selectedQueue || ticket.queueId === selectedQueue)
-      .filter(
-        (ticket) => !selectedContact || ticket.contactId === selectedContact
-      );
-
-    return ticketsFiltered;
-  }
 
   return (
     <React.Fragment>

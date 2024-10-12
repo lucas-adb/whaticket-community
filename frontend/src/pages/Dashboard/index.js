@@ -88,7 +88,7 @@ const Dashboard = () => {
     fetchQueues();
   }, []);
 
-  const { whatsApps, loading } = useContext(WhatsAppsContext);
+  const { whatsApps } = useContext(WhatsAppsContext);
 
   const handleUserChange = (event) => {
     setSelectedUser(event.target.value);

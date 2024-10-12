@@ -17,8 +17,8 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import LightMode from "../assets/lightMode.svg";
-import DarkMode from "../assets/darkMode.svg";
+// import LightMode from "../assets/lightMode.svg";
+// import DarkMode from "../assets/darkMode.svg";
 
 import MainListItems from "./MainListItems";
 import NotificationsPopOver from "../components/NotificationsPopOver";
@@ -27,7 +27,7 @@ import { AuthContext } from "../context/Auth/AuthContext";
 import BackdropLoading from "../components/BackdropLoading";
 import { i18n } from "../translate/i18n";
 
-import { ColorModeContext } from "../context/ColorMode/ColorModeContext";
+// import { ColorModeContext } from "../context/ColorMode/ColorModeContext";
 
 const drawerWidth = 240;
 
@@ -122,7 +122,7 @@ const LoggedInLayout = ({ children }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerVariant, setDrawerVariant] = useState("permanent");
   const { user } = useContext(AuthContext);
-  const { colorMode, setColorMode } = useContext(ColorModeContext);
+  // const { colorMode, setColorMode } = useContext(ColorModeContext);
 
   useEffect(() => {
     if (document.body.offsetWidth > 600) {
@@ -138,11 +138,11 @@ const LoggedInLayout = ({ children }) => {
     }
   }, [drawerOpen]);
 
-  const handleThemeChange = () => {
-    console.log("handleThemeChange");
-    console.log("colorMode", colorMode);
-    setColorMode(colorMode === "light" ? "dark" : "light");
-  }
+  // const handleThemeChange = () => {
+  //   console.log("handleThemeChange");
+  //   console.log("colorMode", colorMode);
+  //   setColorMode(colorMode === "light" ? "dark" : "light");
+  // };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -242,15 +242,19 @@ const LoggedInLayout = ({ children }) => {
             >
               <AccountCircle />
             </IconButton>
-            <IconButton
+            {/* <IconButton
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleThemeChange}
               color="inherit"
             >
-              { colorMode === "light" ? <img src={DarkMode} alt="DarkMode"/> : <img src={LightMode} alt="LightMode"/> }
-            </IconButton>
+              {colorMode === "light" ? (
+                <img src={DarkMode} alt="DarkMode" />
+              ) : (
+                <img src={LightMode} alt="LightMode" />
+              )}
+            </IconButton> */}
             <Menu
               id="menu-appbar"
               anchorEl={anchorEl}
