@@ -232,17 +232,19 @@ const Dashboard = () => {
             </Paper>
           </Grid>
 
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Paper className={classes.fixedHeightPaper}>
               <BasicDatePicker
                 selectedDate={selectedDate}
                 setSelectedDate={setSelectedDate}
               />
             </Paper>
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12} v>
             <FilterForm
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
               selectedUser={selectedUser}
               handleUserChange={handleUserChange}
               users={users}

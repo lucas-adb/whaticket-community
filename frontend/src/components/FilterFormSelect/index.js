@@ -1,5 +1,17 @@
 import React from "react";
-import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
+import {
+  FormControl,
+  InputLabel,
+  makeStyles,
+  MenuItem,
+  Select,
+} from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  formField: {
+    flexGrow: 1,
+  },
+}));
 
 export function FilterFormSelect({
   id,
@@ -8,8 +20,10 @@ export function FilterFormSelect({
   handleValueChange,
   options,
 }) {
+  const classes = useStyles();
+
   return (
-    <FormControl fullWidth margin="normal">
+    <FormControl margin="normal" className={classes.formField}>
       <InputLabel id={`${id}-label`} shrink>
         {label}
       </InputLabel>
